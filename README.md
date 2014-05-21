@@ -1,4 +1,4 @@
-oops :P
+NEW: You can now install the game with 'gem install demigod_game' and then run the game using 'demigod'!!
 
 Hello
 =======================================
