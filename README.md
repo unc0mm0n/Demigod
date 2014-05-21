@@ -1,3 +1,5 @@
+oops :P
+
 Hello
 =======================================
     This is just some self practice project where I try to create a bigger game using ruby
