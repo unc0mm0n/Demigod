@@ -62,8 +62,8 @@ module UiHandler
     puts
   end
 
-  def self.print_tile_options(options = {})
-    options.each |key, value| do
+  def self.print_tile_options(tile)
+    @tile.options.each |key, value| do
       print (AVAILABLE)
       puts ("#{key} - #{value}")
     end

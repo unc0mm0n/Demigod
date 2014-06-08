@@ -42,7 +42,7 @@ class Demigod
     # Asks the user for a tile to do his action on
     decision = UiHandler.get_decision()
 
-    until (@world.exists?(decision) || decision == '')
+    until (@world.valid?(decision) || decision == '')
       UiHandler.print_error(UiHandler::NO_TILE)
       UiHandler.print_turn_message
       decision = UiHandler.get_decision()
@@ -50,7 +50,7 @@ class Demigod
 
     unless decision == ''
       tile = @world.get_tile decision # returns the tile at decision
-      tile.print_options
+      UiHandler.print_tile_options(tile)
 
       # asks for action on tile
       decision = UiHandler.get_decision()
@@ -60,7 +60,7 @@ class Demigod
         break if decision == ''
         UiHandler.print_error(UiHandler::INVALID)
         tile.print_options
-        decision = gets.chomp
+        decision = UiHandler.get_decision()
       end
 
       if decision != ''

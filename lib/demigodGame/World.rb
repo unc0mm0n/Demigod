@@ -68,7 +68,7 @@ class World
     resources
   end
 
-  def exists? (str)
+  def valid? (str)
     str.strip!
     return false if !str.match(/\A\d+\s\d+\Z/)
     true

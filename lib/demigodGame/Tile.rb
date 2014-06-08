@@ -6,12 +6,10 @@
 require_relative 'GameData'
 class Tile
 
-  attr_reader :raisable, :buildable, :built_on, :x, :y
+  attr_reader :options, :built_on, :x, :y
   def initialize(x, y)
     @x = x
     @y = y
-    @raisable = []
-    @buildable = []
     @type = '.'
   end
 
@@ -19,31 +17,6 @@ class Tile
   # Should probably be overriden in subclasses
   def accepts?(order, resources)
     false
-  end
-
-  def print_options
-
-    if @raisable != [] # raising options
-      print "You can raise with:"
-      @raisable.each do |name|
-        print " #{name.to_s} | "
-      end
-      puts
-    end
-
-    if @buildable != [] # building options
-      print "You can build with:"
-      @buildable.each do |name|
-        print " #{name.to_s} | "
-      end
-      puts
-    end
-
-    puts UiHandler::RAISE_WARNING if @built_on
-    puts UiHandler::BACK
-
-
-    print UiHandler::PROMPT
   end
 
   def to_s
@@ -91,7 +64,7 @@ class Sea < Tile
 
   def initialize(x, y)
     super(x, y)
-    @raisable = [:p]
+    @options = [:p]
     @type = '-'
   end
 end
@@ -101,7 +74,7 @@ class Ridge < Tile
 
   def initialize(x, y)
     super(x, y)
-    @buildable = [:m, :c, :d]
+    @options = [:m, :c, :d]
     @type = 'R'
   end
 end
@@ -111,8 +84,8 @@ class Plains < Tile
 
   def initialize(x, y)
     super(x, y)
-    @raisable = [:r, :f]
-    @buildable = [:h, :c, :s]
+    @options = [:r, :f]
+    @options << [:h, :c, :s]
     @type = 'P'
   end
 end
@@ -122,8 +95,8 @@ class Forest < Tile
 
   def initialize(x, y)
     super(x, y)
-    @buildable = [:w, :c, :h]
-    @raisable = [:r]
+    @options = [:w, :c, :h]
+    @options = [:r]
     @type = 'F'
   end
 end
