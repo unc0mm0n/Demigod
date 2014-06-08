@@ -40,12 +40,12 @@ class Demigod
     UiHandler.print_turn_message
 
     # Asks the user for a tile to do his action on
-    decision = gets.chomp
+    decision = UiHandler.get_decision()
 
     until (@world.exists?(decision) || decision == '')
       UiHandler.print_error(UiHandler::NO_TILE)
       UiHandler.print_turn_message
-      decision = gets.chomp
+      decision = UiHandler.get_decision()
     end
 
     unless decision == ''
@@ -53,7 +53,7 @@ class Demigod
       tile.print_options
 
       # asks for action on tile
-      decision = gets.chomp
+      decision = UiHandler.get_decision()
 
       # tile.accepts? uses number of resources to decide if a move is valid
       until tile.accepts?(decision, @resources)

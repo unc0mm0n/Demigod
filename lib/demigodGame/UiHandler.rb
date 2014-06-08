@@ -11,7 +11,10 @@ module UiHandler
   BACK = "Press enter on an empty line to go back"
   INVALID = "That's an invalid move!"
   LOST = "You ran out of resources, I guess you lose..."
-  WIN = "The dragon shrine is built and so the dragons grant you all the powers of immortality" 
+  WIN = "The dragon shrine is built and so the dragons grant you all the powers of immortality"
+  AVAILABLE = "Available moves are: "
+
+          # output #
 
   def self.print_world(world)
     puts
@@ -50,12 +53,26 @@ module UiHandler
   end
 
   def self.print_turn_message
-      puts "Choose a tile to work on. Enter 2 numbers with a space in between i.e. \"1 1\""
-      print PROMPT
+    puts "Choose a tile to work on. Enter 2 numbers with a space in between i.e. \"1 1\""
+    print PROMPT
   end
 
   def self.print_error(error_str)
     puts "Oops! #{error_str}"
     puts
+  end
+
+  def self.print_tile_options(options = {})
+    options.each |key, value| do
+      print (AVAILABLE)
+      puts ("#{key} - #{value}")
+    end
+    print PROMPT
+  end
+
+          # input #
+
+  def self.get_decision()
+    gets.chomp()
   end
 end
