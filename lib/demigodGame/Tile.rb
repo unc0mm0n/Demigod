@@ -13,12 +13,6 @@ class Tile
     @type = '.'
   end
 
-  # The base tile class is abstract and therfore accepts no value
-  # Should probably be overriden in subclasses
-  def accepts?(order, resources)
-    false
-  end
-
   def to_s
     "#{@type}#{@built_on}"
   end
@@ -30,27 +24,18 @@ class Tile
   end
 
   # Checks if an order is valid
-  def accepts?(order, resources)
-    return false if !order.match( /\A\w\Z/ ) # vaild command
+  def accepts?(order)
+    return false if !order || !order.match( /\A\w\Z/) # vaild command
 
-    (@raisable + @buildable).each do |check| # checks which order was given
-      if (check.to_s == order)
-        cost = GameData.get_price(check)
-        puts "This costs #{cost}"
-        if !check_cost(cost, resources)
-          puts "Not enough resources!"
-          return false
-        end
-        return true
-      end
+    @options.each do |check| # checks which order was given
+      return true if (check.to_s == order)
     end
     false
   end
 
-private
-
-  def check_cost(cost, resources)
-
+  def check_cost(order, resources)
+    cost = GameData.get_price(order)
+    puts cost
     # checks each resource for the correct amount
     cost.each do |resource, amount|
       return false if amount > resources[resource]
@@ -84,8 +69,7 @@ class Plains < Tile
 
   def initialize(x, y)
     super(x, y)
-    @options = [:r, :f]
-    @options << [:h, :c, :s]
+    @options = [:r, :f, :h, :c, :s]
     @type = 'P'
   end
 end
@@ -95,8 +79,7 @@ class Forest < Tile
 
   def initialize(x, y)
     super(x, y)
-    @options = [:w, :c, :h]
-    @options = [:r]
+    @options = [:w, :c, :h, :r]
     @type = 'F'
   end
 end

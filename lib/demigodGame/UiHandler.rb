@@ -1,6 +1,8 @@
 # Module to handle most of the output to the screen
 # =================================================
 
+require_relative 'GameData'
+
 module UiHandler
 
   NEW_GAME = "Welcome to Demigod! What size would you want your world to be?"
@@ -13,6 +15,7 @@ module UiHandler
   LOST = "You ran out of resources, I guess you lose..."
   WIN = "The dragon shrine is built and so the dragons grant you all the powers of immortality"
   AVAILABLE = "Available moves are: "
+  RESOURCES = "Not enough resources!"
 
           # output #
 
@@ -63,11 +66,16 @@ module UiHandler
   end
 
   def self.print_tile_options(tile)
-    @tile.options.each |key, value| do
-      print (AVAILABLE)
-      puts ("#{key} - #{value}")
+    puts (AVAILABLE)
+    tile.options.each do |key|
+      print ("#{key} - #{GameData::OPTIONS[key]},  ")
     end
+    puts BACK
     print PROMPT
+  end
+
+  def self.clear_messages()
+    #system "clear" or system "cls"
   end
 
           # input #

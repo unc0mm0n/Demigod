@@ -21,7 +21,6 @@ class Demigod
   def initialize (world, resources = GameData::STARTING_RESOURCES)
     @world = world
     @resources = resources
-    system "clear" or system "cls"
   end
 
   # Handles a turn, main function of the game
@@ -50,17 +49,18 @@ class Demigod
 
     unless decision == ''
       tile = @world.get_tile decision # returns the tile at decision
-      UiHandler.print_tile_options(tile)
 
-      # asks for action on tile
-      decision = UiHandler.get_decision()
-
-      # tile.accepts? uses number of resources to decide if a move is valid
-      until tile.accepts?(decision, @resources)
+      # checks for legality of move on tiles using tile.accepts? and tile.check_cost
+      until tile.accepts?(decision)
         break if decision == ''
-        UiHandler.print_error(UiHandler::INVALID)
-        tile.print_options
+        UiHandler.print_tile_options(tile)
         decision = UiHandler.get_decision()
+        if (!tile.accepts?(decision))
+          UiHandler.print_error(UiHandler::INVALID)
+        elsif (!tile.check_cost(decision, @resources))
+          decision = nil
+          UiHandler.print_error(UiHandler::RESOURCES)
+        end
       end
 
       if decision != ''
@@ -71,7 +71,7 @@ class Demigod
     end
 
     # Clears the screen
-    system "clear" or system "cls"
+    UiHandler.clear_messages()
   end
 
 private

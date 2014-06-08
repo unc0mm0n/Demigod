@@ -52,6 +52,17 @@ module GameData
             :r => RAISE_RIDGE_PRICE
           }
 
+  OPTIONS = {:w => "Woodcutter",
+             :s => "Sheep",
+             :d => "Dragon Shrine",
+             :m => "Mine",
+             :c => "Chapel",
+             :h => "House",
+             :p => "Plains",
+             :f => "Forest",
+             :r => "Ridge"
+            }
+
   def self.get_price(sym)
     return PRICES[sym.to_sym]
   end
