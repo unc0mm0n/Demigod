@@ -37,7 +37,7 @@ class World
     elsif order.match(/\A[wsmchd]\Z/) # for build of any building
       build_on_tile(tile, DECISIONS[:build][order.to_sym])
     else
-      puts "Error occured, continuing but turn skipped."
+      UiHandler.print_error()
     end
   end
 
@@ -60,8 +60,7 @@ class World
     resources.each do |name, value| # lose condition
       if value < 0
         system "clear" or system "cls"
-        puts "#{name} is negative!"
-        puts UiHandler::LOST
+        UiHandler.print_lost_message
         exit
       end
     end
@@ -131,11 +130,11 @@ private
       tile.build(BUILDABLE[building.to_sym])
       @buildings[building.to_sym] += 1
       if building.to_sym == :dragon
-        puts UiHandler::WIN
+        UiHandler.print_win_message
         exit
       end
     else # This shouldn't happen normally
-      puts "There's already a building here"
+      puts "This shouldn't have happened (Buidling already in square)"
     end
 
   end

@@ -60,9 +60,19 @@ module UiHandler
     print PROMPT
   end
 
-  def self.print_error(error_str)
+  def self.print_error(error_str="An error has occured")
     puts "Oops! #{error_str}"
     puts
+  end
+
+  def self.print_lost_message()
+    puts "You ran out of resources! you lost!"
+    puts "(one of youre resources turned negative)"
+    puts
+  end
+
+  def self.print_win_message
+    puts WIN
   end
 
   def self.print_tile_options(tile)
